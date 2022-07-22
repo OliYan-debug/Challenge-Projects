@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../components/head'); %>
+</head>
+<body class="container">
+
+<header>
+  <%- include('../components/header'); %>
+</header>
+
+<main>
+  <div class="jumbotron">
+    <h1><%= data.name %></h1> 
+    <ul>
+      <% films.forEach( (film)=> { %> 
+        <li>
+          <strong><%= film %> </strong>
+        </li>
+        <% }); %> 
+      </ul>
+  </div>
+</main>
+
+<footer>
+  <%- include('../components/footer'); %>
+</footer>
+
+</body>
+</html>
