@@ -4,9 +4,17 @@ const axios = require("axios");
 const BASE_URL = "https://swapi.dev/api";
 const router = express.Router();
 
-async function getData(url){
+async function getData(url) {
   let response = await axios.get(url);
-  return response.data
+  return response.data;
+}
+async function getDataArray(urlArray, params) {
+  returnedArray = [];
+  for (let url of urlArray) {
+    response = await getData(url);
+    returnedArray.push(response[params]);
+  }
+  return returnedArray;
 }
 
 router.get("/people/:id", (req, res) => {
@@ -23,28 +31,24 @@ router.get("/films/:id", (req, res) => {
   });
 });
 
-
-router.get("/", async (req,res) => {
-  let startshipsData = await getData(BASE_URL+"/starships/3")
-  let startshipsMovies = startshipsData.films
-  // let startshipName = startshipsData.name
-  let movies = []
-  async function getFilmsNames(item){
-    let info = await getData(item)
-    movies.push(info.title)
-    if(movies.length == startshipsMovies.length){
-      res.render("pages/index", {data:startshipsData, films:movies})
-
+router.get("/", async (req, res) => {
+  try {
+    url = BASE_URL + "/starships/3";
+    let starshipsData = await getData(url);
+    let films = starshipsData.films;
+    let movies = await getDataArray(films, "title");
+    res.render("pages/index", { data: starshipsData, films: movies });
+  } catch (err) {
+    if (err.response) {
+      console.log(err);
     }
   }
-  startshipsMovies.forEach(getFilmsNames)
+});
 
-})
+router.get("/error", (req, res) => {
+  res.render("pages/error");
 
-
-router.get("/about", (req,res) => {
-  res.render("pages/about")
-})
+});
 
 router.get("/starships/:id", (req, res) => {
   let id = req.params.id;
