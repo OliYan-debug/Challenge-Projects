@@ -2,27 +2,60 @@
 <html lang="en">
 <head>
   <%- include('../components/head'); %>
+
 </head>
 <body class="container">
 
 <header>
   <%- include('../components/header'); %>
+  
 </header>
-
+<body>
+  
 <main>
-  <div class="jumbotron">
-    <h1><%= data.name %></h1> 
-    <ul>
-      <% films.forEach( (film)=> { %> 
-        <li>
-          <strong><%= film %> </strong>
-        </li>
-        <% }); %> 
+  <div class="card text-bg-dark p-3">
+    <div class="card-body">
+      <h1 class="card-title p-2 text-center"><%= data.name %></h1>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item text-bg-secondary"><strong>Model:</strong> <%= data.model  %> </li>
+        <li class="list-group-item text-bg-secondary"><strong>Manufacturer:</strong> <%= data.manufacturer  %> </li>
+        <li class="list-group-item text-bg-secondary"><strong>Value:</strong> <%= data.cost_in_credits  %></li>
+        <li class="list-group-item text-bg-secondary"><strong>Length:</strong> <%= data.length  %></li>
+        <li class="list-group-item text-bg-secondary"><strong>Max(ATM) Speed:</strong> <%= data.max_atmosphering_speed  %></li>
+        <li class="list-group-item text-bg-secondary"><strong>Crew:</strong> <%= data.crew  %></li>
+        <% if(data.passengers != "n/a"){ %>
+          <li class="list-group-item text-bg-secondary"><strong>Passengers:</strong> <%= data.passengers  %></li>
+        <% } %>
+        <li class="list-group-item text-bg-secondary"><strong>Cargo Capacity:</strong> <%= data.cargo_capacity  %></li>
+        <li class="list-group-item text-bg-secondary"><strong>Consumables:</strong> <%= data.consumables  %></li>
+        <li class="list-group-item text-bg-secondary"><strong>HyperDrive Rating:</strong> <%= data.hyperdrive_rating  %></li> 
+        <li class="list-group-item text-bg-secondary"><strong>Megalight:</strong> <%= data.MGLT  %></li> 
+        <li class="list-group-item text-bg-secondary"><strong>Class:</strong> <%= data.starship_class  %></li> 
+        <% if(data.pilots.length != 0){ %>
+          <li class="list-group-item text-bg-secondary"><strong>Pilots:</strong> <%= data.pilots  %></li>
+        <% } %>
       </ul>
+
+    </div>
+    <div class="card text-bg-light p-3" >
+      <div class="card-header"><h4>Movies</h4></div>
+      <ul class="list-group list-group-flush">
+        <% films.forEach( (film)=> { %> 
+          <li class="list-group-item">
+            <strong><%= film %> </strong>
+          </li>
+          <% }); %> 
+        </ul>
+    </div>
+
   </div>
 </main>
 
-<footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
+
+
+<footer  class="flex-shrink-0 py-4 bg-dark text-white-50">
   <%- include('../components/footer'); %>
 </footer>
 
