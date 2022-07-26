@@ -33,11 +33,7 @@ router.get("/films/:id", (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    url = BASE_URL + "/starships/3";
-    let starshipsData = await getData(url);
-    let films = starshipsData.films;
-    let movies = await getDataArray(films, "title");
-    res.render("pages/index", { data: starshipsData, films: movies });
+    res.render("pages/index");
   } catch (err) {
     if (err.response) {
       console.log(err);
@@ -50,11 +46,24 @@ router.get("/error", (req, res) => {
 
 });
 
-router.get("/starships/:id", (req, res) => {
-  let id = req.params.id;
-  axios.get(BASE_URL + "/starships/" + id).then((response) => {
-    res.json(response.data);
-  });
+router.get("/starships/:id", async (req, res) => {
+  try {
+    let id = req.params.id;
+    url = BASE_URL + "/starships/" + id;
+    let starshipsData = await getData(url);
+    let films = starshipsData.films;
+    let pilots_names;
+    if (starshipsData.pilots != ""){
+      pilots_names = await getDataArray(starshipsData.pilots, "name");
+    }
+    let movies = await getDataArray(films, "title");
+    res.render("pages/index", { data: starshipsData, films: movies, pilots: pilots_names });
+  } catch (err) {
+    if (err.response) {
+      console.log(err.code);
+      res.render("pages/error")
+    }
+  }
 });
 
 router.get("/species/:id", (req, res) => {
